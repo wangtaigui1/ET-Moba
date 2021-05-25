@@ -72,13 +72,8 @@ namespace NodeEditorFramework.Standard
                 {
                     try
                     {
-                        AssureEditor();
-                        editorInterface.AssertSavaCanvasSuccessfully();
                         string NodeCanvasPath = AssetDatabase.GetAssetPath(instanceID);
-                        NodeCanvasPath = NodeCanvasPath.Replace("/", @"\");
-                        _editor.canvasCache.LoadNodeCanvas(NodeCanvasPath);
-                        //需要重新为editorInterface绑定canvasCache，所以这里要置空，留给框架底层自行检测然后绑定
-                        editorInterface = null;
+                        OpenCanvasByPath(NodeCanvasPath);
                         return true;
                     }
                     catch
@@ -89,6 +84,16 @@ namespace NodeEditorFramework.Standard
             }
 
             return false;
+        }
+
+        public static void OpenCanvasByPath(string canvasPath)
+        {
+            AssureEditor();
+            editorInterface.AssertSavaCanvasSuccessfully();
+            string NodeCanvasPath = canvasPath;
+            _editor.canvasCache.LoadNodeCanvas(NodeCanvasPath);
+            //需要重新为editorInterface绑定canvasCache，所以这里要置空，留给框架底层自行检测然后绑定
+            editorInterface = null;
         }
 
         private void OnEnable()

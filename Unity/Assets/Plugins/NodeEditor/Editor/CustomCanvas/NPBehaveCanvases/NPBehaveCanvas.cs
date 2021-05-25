@@ -4,18 +4,19 @@
 // Data: 2019年8月20日 7:55:05
 //------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using ETModel;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using NodeEditorFramework;
-using NPBehave;
 using Plugins.NodeEditor.Editor.NPBehaveNodes;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking.Types;
+using Exception = NPBehave.Exception;
 using Node = NPBehave.Node;
 
 namespace Plugins.NodeEditor.Editor.Canvas
@@ -41,7 +42,7 @@ namespace Plugins.NodeEditor.Editor.Canvas
         {
             if (string.IsNullOrEmpty(SavePath) || string.IsNullOrEmpty(Name))
             {
-                Log.Error("保存路径或文件名不能为空，请检查配置");
+                Log.Error($"保存路径或文件名不能为空，请检查配置: {this.saveName}");
                 return;
             }
 

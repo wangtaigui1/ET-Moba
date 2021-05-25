@@ -96,6 +96,10 @@ namespace Plugins.NodeEditor.Editor.Canvas
         /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportorBase的数据体</param>
         public virtual void AutoSetCanvasDatas(NP_DataSupportorBase npDataSupportorBase)
         {
+            if (npDataSupportorBase == null)
+            {
+                return;
+            }
             this.AutoSetNP_NodeData(npDataSupportorBase);
             this.AutoSetNP_BBDatas(npDataSupportorBase);
         }
@@ -106,6 +110,10 @@ namespace Plugins.NodeEditor.Editor.Canvas
         /// <param name="npDataSupportorBase">自定义的继承于NP_DataSupportorBase的数据体</param>
         private void AutoSetNP_NodeData(NP_DataSupportorBase npDataSupportorBase)
         {
+            if (npDataSupportorBase == null)
+            {
+                return;
+            }
             npDataSupportorBase.NPBehaveTreeDataId = 0;
             npDataSupportorBase.NP_DataSupportorDic.Clear();
 
@@ -127,6 +135,11 @@ namespace Plugins.NodeEditor.Editor.Canvas
             foreach (var node in allNodes)
             {
                 node.NP_GetNodeData().id = IdGenerater.GenerateId();
+            }
+
+            if (this.Config == null)
+            {
+                return;
             }
 
             //设置导出的Id
