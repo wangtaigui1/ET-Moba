@@ -13,24 +13,14 @@ namespace ETModel
     /// </summary>
     public class FlashDamageBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
-            FlashDamageBuffData flashDamageBuffData = (this.BuffData as FlashDamageBuffData);
+            FlashDamageBuffData flashDamageBuffData = this.GetSelfBuffData<FlashDamageBuffData>();
             DamageData damageData = ReferencePool.Acquire<DamageData>().InitData(flashDamageBuffData.BuffDamageTypes,
                 BuffDataCalculateHelper.CalculateCurrentData(this, this.BuffData), this.TheUnitFrom, this.TheUnitBelongto,
                 flashDamageBuffData.CustomData);
 
-            damageData.DamageValue *= (this.BuffData as FlashDamageBuffData).DamageFix;
+            damageData.DamageValue *= flashDamageBuffData.DamageFix;
 
             this.TheUnitFrom.GetComponent<CastDamageComponent>().BaptismDamageData(damageData);
 
@@ -57,10 +47,6 @@ namespace ETModel
 
             this.BuffState = BuffState.Finished;
             //Log.Info($"设置瞬时伤害Buff：{this.MSkillBuffDataBase.FlagId}状态为Finshed");
-        }
-
-        public override void OnFinished()
-        {
         }
     }
 }

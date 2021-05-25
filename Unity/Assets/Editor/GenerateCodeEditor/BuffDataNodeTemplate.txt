@@ -34,7 +34,7 @@ namespace SkillDemo
 
         public override void NodeGUI()
         {
-            RTEditorGUI.TextField(SkillBuffBases?.BuffDes);
+            EditorGUILayout.TextField(SkillBuffBases?.BuffDes);
         }
     }
 }

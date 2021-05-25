@@ -13,16 +13,6 @@ namespace ETModel
     /// </summary>
     public class BindStateBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
             ExcuteInternal();
@@ -43,7 +33,7 @@ namespace ETModel
 
         public override void OnFinished()
         {
-            BindStateBuffData tempData = this.BuffData as BindStateBuffData;
+            BindStateBuffData tempData = this.GetSelfBuffData<BindStateBuffData>();
             if (tempData.OriState != null)
             {
                 this.GetBuffTarget().GetComponent<StackFsmComponent>().RemoveState(tempData.OriState.StateName);
@@ -57,7 +47,7 @@ namespace ETModel
 
         private void ExcuteInternal()
         {
-            BindStateBuffData tempData = this.BuffData as BindStateBuffData;
+            BindStateBuffData tempData = this.GetSelfBuffData<BindStateBuffData>();
 
             foreach (var buffData in tempData.OriBuff)
             {

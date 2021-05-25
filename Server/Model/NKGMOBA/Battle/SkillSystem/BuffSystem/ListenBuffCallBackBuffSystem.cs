@@ -11,20 +11,9 @@ namespace ETModel
     /// </summary>
     public class ListenBuffCallBackBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
-            //强制类型转换为Buff事件
-            ListenBuffCallBackBuffData temp = (ListenBuffCallBackBuffData) this.BuffData;
+            ListenBuffCallBackBuffData temp = this.GetSelfBuffData<ListenBuffCallBackBuffData>();
 
             Game.Scene.GetComponent<BattleEventSystem>().RegisterEvent($"{temp.EventId}{this.TheUnitFrom.Id}", temp.ListenBuffEventNormal);
 
@@ -45,8 +34,7 @@ namespace ETModel
 
         public override void OnFinished()
         {
-            //强制类型转换为Buff事件
-            ListenBuffCallBackBuffData temp = (ListenBuffCallBackBuffData) this.BuffData;
+            ListenBuffCallBackBuffData temp = this.GetSelfBuffData<ListenBuffCallBackBuffData>();
             Game.Scene.GetComponent<BattleEventSystem>().UnRegisterEvent($"{temp.EventId}{this.TheUnitFrom.Id}", temp.ListenBuffEventNormal);
         }
     }

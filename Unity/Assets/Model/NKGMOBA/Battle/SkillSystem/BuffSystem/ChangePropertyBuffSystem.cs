@@ -14,16 +14,7 @@ namespace ETModel
         /// 内瑟斯使目标英雄衰老，持续5秒，减少其35%移动速度，在持续期间减速效果逐渐提升至47%/59%/71%/83%/95%。该目标被减少的攻击速度为该数值的一半。
         /// </summary>
         private ADataModifier dataModifier;
-
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
+        
         public override void OnExecute()
         {
             switch (this.BuffData.BuffWorkType)
@@ -64,22 +55,6 @@ namespace ETModel
             {
                 if (TimeHelper.Now() >= this.MaxLimitTime)
                 {
-                    switch (this.BuffData.BuffWorkType)
-                    {
-                        case BuffWorkTypes.ChangeAttackValue:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .RemoveDataModifier(NumericType.AttackAdd.ToString(), dataModifier, NumericType.AttackAdd);
-                            break;
-                        case BuffWorkTypes.ChangeMagic:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .RemoveDataModifier(NumericType.Mp.ToString(), dataModifier, NumericType.Mp);
-                            break;
-                        case BuffWorkTypes.ChangeSpeed:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .AddDataModifier(NumericType.SpeedAdd.ToString(), this.dataModifier, NumericType.SpeedAdd);
-                            break;
-                    }
-
                     this.BuffState = BuffState.Finished;
                 }
             }
@@ -87,14 +62,23 @@ namespace ETModel
 
         public override void OnFinished()
         {
+            switch (this.BuffData.BuffWorkType)
+            {
+                case BuffWorkTypes.ChangeAttackValue:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.AttackAdd.ToString(), dataModifier, NumericType.AttackAdd);
+                    break;
+                case BuffWorkTypes.ChangeMagic:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.Mp.ToString(), dataModifier, NumericType.Mp);
+                    break;
+                case BuffWorkTypes.ChangeSpeed:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.SpeedAdd.ToString(), this.dataModifier, NumericType.SpeedAdd);
+                    break;
+            }
             ReferencePool.Release(dataModifier);
             dataModifier = null;
-        }
-
-        public override void OnRefresh()
-        {
-            base.OnRefresh();
-            //Log.Info("刷新了血怒Buff!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 }

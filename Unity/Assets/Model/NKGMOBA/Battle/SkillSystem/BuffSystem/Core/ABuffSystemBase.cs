@@ -53,7 +53,14 @@ namespace ETModel
         /// <param name="buffData">Buff数据</param>
         /// <param name="theUnitFrom">来自哪个Unit</param>
         /// <param name="theUnitBelongto">寄生于哪个Unit</param>
-        public abstract void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto);
+        public virtual void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
+        {
+            //设置Buff来源Unit和归属Unit
+            this.TheUnitFrom = theUnitFrom;
+            this.TheUnitBelongto = theUnitBelongto;
+            this.BuffData = buffData;
+            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
+        }
 
         /// <summary>
         /// Buff触发
@@ -70,7 +77,10 @@ namespace ETModel
         /// <summary>
         /// 重置Buff用
         /// </summary>
-        public abstract void OnFinished();
+        public virtual void OnFinished()
+        {
+            
+        }
 
         /// <summary>
         /// 刷新，用于刷新Buff状态

@@ -8,19 +8,9 @@ namespace ETModel
 {
     public class SendBuffInfoToClientBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
-            SendBuffInfoToClientBuffData sendBuffInfoToClientBuffData = this.BuffData as SendBuffInfoToClientBuffData;
+            SendBuffInfoToClientBuffData sendBuffInfoToClientBuffData = this.GetSelfBuffData<SendBuffInfoToClientBuffData>();
 
             ABuffSystemBase targetBuffSystem = this.TheUnitBelongto.GetComponent<BuffManagerComponent>()
                     .GetBuffById(
@@ -39,10 +29,6 @@ namespace ETModel
                     BuffMaxLimitTime = targetBuffSystem.MaxLimitTime,
                 });
             this.BuffState = BuffState.Finished;
-        }
-
-        public override void OnFinished()
-        {
         }
     }
 }

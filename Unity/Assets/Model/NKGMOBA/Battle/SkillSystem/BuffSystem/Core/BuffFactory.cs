@@ -20,17 +20,12 @@ namespace ETModel
         public static Dictionary<BuffSystemType, Type> AllBuffSystemTypes = new Dictionary<BuffSystemType, Type>()
         {
             //TODO 如果要加新的Buff逻辑类型，需要在这里拓展，本人架构能力的确有限。。。
-            { BuffSystemType.FlashDamageBuffSystem, typeof (FlashDamageBuffSystem) },
-            { BuffSystemType.SustainDamageBuffSystem, typeof (SustainDamageBuffSystem) },
             { BuffSystemType.ChangePropertyBuffSystem, typeof (ChangePropertyBuffSystem) },
             { BuffSystemType.ListenBuffCallBackBuffSystem, typeof (ListenBuffCallBackBuffSystem) },
             { BuffSystemType.BindStateBuffSystem, typeof (BindStateBuffSystem) },
-            { BuffSystemType.TreatmentBuffSystem, typeof (TreatmentBuffSystem) },
             { BuffSystemType.PlayEffectBuffSystem, typeof (PlayEffectBuffSystem) },
             { BuffSystemType.ReplaceAnimBuffSystem, typeof (ReplaceAnimBuffSystem) },
             { BuffSystemType.RefreshTargetBuffTimeBuffSystem, typeof (RefreshTargetBuffTimeBuffSystem) },
-            { BuffSystemType.SendBuffInfoToClientBuffSystem, typeof (SendBuffInfoToClientBuffSystem) },
-            { BuffSystemType.ReplaceAttackBuffSystem, typeof (ReplaceAttackBuffSystem) },
             { BuffSystemType.ChangeRenderAssetBuffSystem, typeof (ChangeRenderAssetBuffSystem) },
             { BuffSystemType.ChangeMaterialBuffSystem, typeof (ChangeMaterialBuffSystem) },
         };

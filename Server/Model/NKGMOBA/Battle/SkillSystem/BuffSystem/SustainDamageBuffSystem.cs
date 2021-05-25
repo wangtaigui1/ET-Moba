@@ -18,17 +18,6 @@ namespace ETModel
         /// </summary>
         private long m_SelfNextimer;
 
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-            //Log.Info("持续伤害Buff初始化完成");
-        }
-
         public override void OnExecute()
         {
             ExcuteDamage();
@@ -54,14 +43,10 @@ namespace ETModel
             }
         }
 
-        public override void OnFinished()
-        {
-        }
-
         private void ExcuteDamage()
         {
             //强制类型转换为伤害Buff数据 
-            SustainDamageBuffData temp = (SustainDamageBuffData) this.BuffData;
+            SustainDamageBuffData temp = this.GetSelfBuffData<SustainDamageBuffData>();
 
             DamageData damageData = ReferencePool.Acquire<DamageData>().InitData(temp.BuffDamageTypes,
                 BuffDataCalculateHelper.CalculateCurrentData(this, this.BuffData), this.TheUnitFrom, this.TheUnitBelongto);

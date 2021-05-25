@@ -14,20 +14,10 @@ namespace ETModel
         /// 被替换下来的动画信息
         /// </summary>
         private Dictionary<string, string> m_ReplacedAnimData = new Dictionary<string, string>();
-
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
+        
         public override void OnExecute()
         {
-            ReplaceAnimBuffData replaceAnimBuffData = this.BuffData as ReplaceAnimBuffData;
+            ReplaceAnimBuffData replaceAnimBuffData = this.GetSelfBuffData<ReplaceAnimBuffData>();
             AnimationComponent animationComponent = this.GetBuffTarget().GetComponent<AnimationComponent>();
             foreach (var animMapInfo in replaceAnimBuffData.AnimReplaceInfo)
             {

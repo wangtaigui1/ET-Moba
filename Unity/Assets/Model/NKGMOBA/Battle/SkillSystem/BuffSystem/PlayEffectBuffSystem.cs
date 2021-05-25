@@ -10,16 +10,6 @@ namespace ETModel
 {
     public class PlayEffectBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
             PlayEffect();
@@ -49,7 +39,7 @@ namespace ETModel
 
         public override void OnFinished()
         {
-            PlayEffectBuffData playEffectBuffData = this.BuffData as PlayEffectBuffData;
+            PlayEffectBuffData playEffectBuffData = this.GetSelfBuffData<PlayEffectBuffData>();
             string targetEffectName = playEffectBuffData.EffectName;
             if (playEffectBuffData.CanChangeNameByCurrentOverlay)
             {
@@ -77,7 +67,7 @@ namespace ETModel
 
         void PlayEffect()
         {
-            PlayEffectBuffData playEffectBuffData = this.BuffData as PlayEffectBuffData;
+            PlayEffectBuffData playEffectBuffData = this.GetSelfBuffData<PlayEffectBuffData>();
             string targetEffectName = playEffectBuffData.EffectName;
 
             if (playEffectBuffData.CanChangeNameByCurrentOverlay)

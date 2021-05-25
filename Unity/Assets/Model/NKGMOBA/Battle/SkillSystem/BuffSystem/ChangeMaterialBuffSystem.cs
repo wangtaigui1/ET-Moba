@@ -16,20 +16,9 @@ namespace ETModel
         /// </summary>
         private long m_SelfNextimer;
 
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-            //Log.Info("持续伤害Buff初始化完成");
-        }
-
         public override void OnExecute()
         {
-            ChangeMaterialBuffData changeMaterialBuffData = this.BuffData as ChangeMaterialBuffData;
+            ChangeMaterialBuffData changeMaterialBuffData = this.GetSelfBuffData<ChangeMaterialBuffData>();
             SkinnedMeshRenderer skinnedMeshRenderer = this.GetBuffTarget().GameObject.GetRCInternalComponent<SkinnedMeshRenderer>("Materials");
 
             List<Material> currentMats = new List<Material>();
@@ -61,7 +50,7 @@ namespace ETModel
 
         public override void OnFinished()
         {
-            ChangeMaterialBuffData changeMaterialBuffData = this.BuffData as ChangeMaterialBuffData;
+            ChangeMaterialBuffData changeMaterialBuffData = this.GetSelfBuffData<ChangeMaterialBuffData>();
             SkinnedMeshRenderer skinnedMeshRenderer = this.GetBuffTarget().GameObject.GetRCInternalComponent<SkinnedMeshRenderer>("Materials");
 
             List<Material> currentMats = new List<Material>();

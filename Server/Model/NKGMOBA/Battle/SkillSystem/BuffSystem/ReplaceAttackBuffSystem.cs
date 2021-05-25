@@ -10,19 +10,9 @@ namespace ETModel
 {
     public class ReplaceAttackBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
-            ReplaceAttackBuffData replaceAttackBuffData = this.BuffData as ReplaceAttackBuffData;
+            ReplaceAttackBuffData replaceAttackBuffData = this.GetSelfBuffData<ReplaceAttackBuffData>();
 
             Unit unit = UnitComponent.Instance.Get(this.GetBuffTarget().Id);
             unit.GetComponent<CommonAttackComponent>().SetAttackReplaceInfo(this.BelongtoRuntimeTree.Id, replaceAttackBuffData.AttackReplaceInfo);
@@ -60,7 +50,7 @@ namespace ETModel
 
         public override void OnFinished()
         {
-            ReplaceAttackBuffData replaceAttackBuffData = this.BuffData as ReplaceAttackBuffData;
+            ReplaceAttackBuffData replaceAttackBuffData = this.GetSelfBuffData<ReplaceAttackBuffData>();
 
             Unit unit = UnitComponent.Instance.Get(this.GetBuffTarget().Id);
             unit.GetComponent<CommonAttackComponent>().ReSetAttackReplaceInfo();

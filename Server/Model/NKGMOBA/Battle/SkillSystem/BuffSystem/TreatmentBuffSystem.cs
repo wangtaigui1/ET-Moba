@@ -11,16 +11,6 @@ namespace ETModel
     /// </summary>
     public class TreatmentBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
             float finalTreatValue;
@@ -36,10 +26,6 @@ namespace ETModel
             Game.Scene.GetComponent<BattleEventSystem>().Run($"{EventIdType.TakeTreate}{this.GetBuffTarget()}", finalTreatValue);
 
             this.BuffState = BuffState.Finished;
-        }
-
-        public override void OnFinished()
-        {
         }
     }
 }

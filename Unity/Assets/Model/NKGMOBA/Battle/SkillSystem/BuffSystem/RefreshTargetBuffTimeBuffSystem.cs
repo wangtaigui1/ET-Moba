@@ -8,19 +8,9 @@ namespace ETModel
 {
     public class RefreshTargetBuffTimeBuffSystem: ABuffSystemBase
     {
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
-            RefreshTargetBuffTimeBuffData refreshTargetBuffTimeBuffData = this.BuffData as RefreshTargetBuffTimeBuffData;
+            RefreshTargetBuffTimeBuffData refreshTargetBuffTimeBuffData = this.GetSelfBuffData<RefreshTargetBuffTimeBuffData>();
 
             BuffManagerComponent buffManagerComponent = this.GetBuffTarget().GetComponent<BuffManagerComponent>();
 
@@ -40,10 +30,6 @@ namespace ETModel
             }
 
             this.BuffState = BuffState.Finished;
-        }
-
-        public override void OnFinished()
-        {
         }
     }
 }

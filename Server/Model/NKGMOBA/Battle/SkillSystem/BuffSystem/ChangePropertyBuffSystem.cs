@@ -15,15 +15,6 @@ namespace ETModel
         /// </summary>
         private ADataModifier dataModifier;
 
-        public override void OnInit(BuffDataBase buffData, Unit theUnitFrom, Unit theUnitBelongto)
-        {
-            //设置Buff来源Unit和归属Unit
-            this.TheUnitFrom = theUnitFrom;
-            this.TheUnitBelongto = theUnitBelongto;
-            this.BuffData = buffData;
-            BuffTimerAndOverlayHelper.CalculateTimerAndOverlay(this, this.BuffData);
-        }
-
         public override void OnExecute()
         {
             switch (this.BuffData.BuffWorkType)
@@ -64,22 +55,6 @@ namespace ETModel
             {
                 if (TimeHelper.Now() >= this.MaxLimitTime)
                 {
-                    switch (this.BuffData.BuffWorkType)
-                    {
-                        case BuffWorkTypes.ChangeAttackValue:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .RemoveDataModifier(NumericType.AttackAdd.ToString(), dataModifier, NumericType.AttackAdd);
-                            break;
-                        case BuffWorkTypes.ChangeMagic:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .RemoveDataModifier(NumericType.Mp.ToString(), dataModifier, NumericType.Mp);
-                            break;
-                        case BuffWorkTypes.ChangeSpeed:
-                            this.GetBuffTarget().GetComponent<DataModifierComponent>()
-                                    .RemoveDataModifier(NumericType.Speed.ToString(), dataModifier, NumericType.Speed);
-                            break;
-                    }
-
                     this.BuffState = BuffState.Finished;
                 }
             }
@@ -87,14 +62,23 @@ namespace ETModel
 
         public override void OnFinished()
         {
+            switch (this.BuffData.BuffWorkType)
+            {
+                case BuffWorkTypes.ChangeAttackValue:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.AttackAdd.ToString(), dataModifier, NumericType.AttackAdd);
+                    break;
+                case BuffWorkTypes.ChangeMagic:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.Mp.ToString(), dataModifier, NumericType.Mp);
+                    break;
+                case BuffWorkTypes.ChangeSpeed:
+                    this.GetBuffTarget().GetComponent<DataModifierComponent>()
+                            .RemoveDataModifier(NumericType.Speed.ToString(), dataModifier, NumericType.Speed);
+                    break;
+            }
             ReferencePool.Release(dataModifier);
             dataModifier = null;
-        }
-
-        public override void OnRefresh()
-        {
-            base.OnRefresh();
-            //Log.Info("刷新了血怒Buff!!!!!!!!!!!!!!!!!!!!!");
         }
     }
 }
