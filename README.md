@@ -99,6 +99,9 @@
 ### 技能编辑器v0.0.3
 
 ![技能编辑器v0.0.3](https://images.gitee.com/uploads/images/2021/0418/213018_1aca0879_2253805.png "技能编辑器v0.0.3")
+### 技能配置浏览器
+
+![技能配置浏览器](https://images.gitee.com/uploads/images/2021/0525/215950_9f2f89c1_2253805.png "QQ截图20210525215846.png")
 ### 技能系统架构图
 
 ![163758_138e22e9_2253805](https://images.gitee.com/uploads/images/2020/0722/084148_1f2eb6b1_2253805.png)
